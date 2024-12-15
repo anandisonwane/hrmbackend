@@ -2,6 +2,7 @@ package com.csi.controller;
 
 import com.csi.model.Employee;
 import com.csi.service.EmployeeServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -29,5 +31,11 @@ public class EmployeeController {
     public ResponseEntity<List<Employee>> findAll()
     {
         return ResponseEntity.ok(service.findAll());
+    }
+
+    @GetMapping("/sortByName")
+    public ResponseEntity<List<Employee>> sortByName()
+    {
+       return ResponseEntity.ok(service.findAll().stream().sorted(Comparator.comparing(Employee::getEmpName)).toList());
     }
 }
